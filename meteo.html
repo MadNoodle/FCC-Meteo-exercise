@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>test meteo</title>
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/weather-icons/1.3.2/css/weather-icons.min.css'>
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:100" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:900" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel='stylesheet' href='meteo.css'>
+
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
+  <script>
+    var url = 'https://fcc-weather-api.glitch.me//api/current?';
+    var lat;
+    var lon;
+
+    $(document).ready(function() {
+
+      // Waiting while loading ++ should had a loader
+      $('body').css('background-color', '#8edee2');
+      $('#loader').show();
+      $('#btn').hide();
+      $('#thermo').hide();
+      $('#button').hide();
+      $('#title').hide();
+
+      // Ask for geolocation
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          lat = 'lat=' + position.coords.latitude;
+          lon = 'lon=' + position.coords.longitude;
+          console.log(lat + ' ' + lon);
+          url = url + lat + '&' + lon;
+          updateInfo();
+        });
+      };
+
+      $('#unit').click(function() {
+        var currentTempUnit = $('#unit').text();
+        var newTempUnit = currentTempUnit == '°C ' ? '°F' : '°C';
+        $('#unit').text(newTempUnit);
+        if (newTempUnit == 'F') {
+          var fahTemp = Math.round(parseInt($('#temperature').text()) * 9 / 5 + 32);
+          $('#temperature').text(fahTemp + ' ' + String.fromCharCode(176));
+        } else {
+          $('#temperature').text(temp + ' ' + String.fromCharCode(176));
+        }
+      });
+
+      //Auto Refresh info
+      function updateInfo() {
+        console.log('THE PAGE REFRESHES');
+        clear();
+        getData();
+        startTime();
+
+        // auto refresh every minute.
+        var update = setTimeout(updateInfo, 60000);
+      }
+
+      // clear all fields when refresh before populating with new infos
+      function clear() {
+
+        document.getElementById('time').innerHTML = '';
+        document.getElementById('date').innerHTML = '';
+        document.getElementById('weather').innerHTML = '';
+        document.getElementById('city').innerHTML = '';
+        document.getElementById('temperature').innerHTML = '';
+        document.getElementById('icon').innerHTML = '';
+      }
+
+      // Function to display time
+      function startTime() {
+        var today = new Date();
+        weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+          wd = weekday[today.getUTCDay()];
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+
+        var h = today.getHours();
+        var m = today.getMinutes();
+        var s = today.getSeconds();
+        m = checkTime(m);
+        s = checkTime(s);
+        today = dd + '/' + mm + '/' + yyyy;
+
+        document.getElementById('date').innerHTML = wd + ' ' + today;
+        document.getElementById('time').innerHTML = h + ':' + m + ':' + s;
+
+        // auto update Time
+        var t = setTimeout(startTime, 500);
+      }
+
+      // add zero in front of numbers < 10
+      function checkTime(i) {
+        if (i < 10) {
+          i = '0' + i;
+        };
+
+        return i;
+      }
+
+      // grab data from FCC API
+      function getData() {
+        $.ajax({
+          url: url, // url defined at the beginning of the script
+          type: 'GET',
+          dataType: 'json',
+          success: function (data) {
+            console.log(data);
+            $('#loader').hide();
+            $('#refresh').show();
+            $('#btn').show();
+            $('thermo').show();
+            $('#button').show();
+            $('#title').show();
+            $('#city').text(data.name + ', ' + data.sys.country);
+            $('#temperature').append('<span class="temp">' + Math.round(data.main.temp) + '°C</span>');
+            var weather = data.weather[0].main;
+            $('#weather').text(data.weather[0].main);
+            $('#loader-spinner').removeClass();
+
+            // changing background and weather icons
+            switch (weather) {
+              case 'Drizzle':
+                $('#icon').append('<i class="wi wi-sprinkle"></i>');
+                document.body.style.backgroundImage =
+                  "url('https://blabberblah.files.wordpress.com/2010/07/dsc_0116.jpg')";
+                break;
+              case 'Clouds':
+                $('#icon').append('<i class="wi wi-cloud"></i>');
+                document.body.style.backgroundImage =
+                  "url('https://wallpapers.walldevil.com/wallpapers/a20/preview/wallpapaer-wallpaper-cloud-earth.jpg')";
+                break;
+              case 'Rain':
+                $('#icon').append('<i class="wi wi-rain"></i>');
+                document.body.style.backgroundImage =
+                  "url('https://www.walldevil.com/wallpapers/a50/fields-rainy-custom-wallpaper-nature-rain-grass.jpg')";
+                break;
+              case 'Snow':
+                $('#icon').append('<i class="wi wi-snow"></i>');
+                document.body.style.backgroundImage =
+                  "url('https://www.walldevil.com/wallpapers/a25/snow-artistic-wallpaper-wallpapers.jpg')";
+                break;
+              case 'Clear':
+                $('#icon').append('<i class="wi wi-day-sunny"></i>');
+                document.body.style.backgroundImage =
+                  "url('https://www.walldevil.com/wallpapers/a35/sky-wallpapers-blue-sunshine-computer.jpg')";
+                break;
+              case 'Thunderstom':
+                $('#icon').append('<i class="wi wi-day-thunderstorm"></i>');
+                document.body.style.backgroundImage =
+                  "url('https://i.ytimg.com/vi/n-9ZLWnFbOI/maxresdefault.jpg')";
+                break;
+              default:
+                $('#icon').remove();
+            }
+          }
+        });
+      }
+    });
+  </script>
+
+</head>
+
+<body>
+  <div class="lds-css ng-scope" id="loader">
+  <div class="lds-spinner" style="100%;height:100%"></div>
+  </div>
+  <div class="container">
+    <div id="title" style="text-center">
+      <h1> Free Code camp Weather</h1>
+    </div>
+    <div id="city" style="text-center"></div>
+    <section id="info-display" style="text-center">
+
+      <div id="left-block">
+        <ul>
+          <li id="date" style="text-center"></li>
+          <li id="time" style="text-center"></li>
+          <li style="text-center"><i id="thermo" class="wi wi-thermometer"></i><span id="temperature"></span></li>
+          <button id="button" class="btn fancy-button" style="text-center">UNIT</button>
+        </ul>
+      </div>
+
+      <div id="right-block">
+        <ul>
+          <li id="icon" style="text-center"></li>
+          <li id="weather" style="text-center"></li>
+        </ul>
+      </div>
+
+    </section>
+
+
+
+  </div>
+  </div>
+
+</body>
+
+</html>

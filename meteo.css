@@ -1,0 +1,285 @@
+body {
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-position: center top;
+  background-size: 100% auto;
+
+
+}
+
+.container {
+  width: 80%;
+  margin: 5% 10%;
+
+}
+
+#title {
+  text-align: center;
+}
+
+#title h1 {
+  color: #fff;
+}
+
+#info-display {
+  width: 100%;
+}
+
+#info-display ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 10px;
+  text-align: center;
+  clear: left;
+  display: inline-block;
+}
+
+#info-display ul:after {
+  list-style-type: none;
+  margin: 0;
+  padding: 10px;
+  text-align: center;
+  clear: left;
+  display: inline-block;
+}
+
+#info-display li {
+  color: #fff;
+  text-align: center;
+}
+
+#city {
+  color: #fff;
+  text-align: center;
+  font-size: 40px;
+}
+
+#left-block {
+  display: inline-block;
+  margin: auto;
+  width: 42%;
+  padding: 3.5%;
+  text-align: center;
+  font-size: 40px;
+}
+
+#right-block {
+  display: inline-block;
+  margin: auto;
+  width: 42%;
+  padding: 3.5%;
+  text-align: center;
+  font-size: 40px;
+}
+
+#icon {
+  font-size: 200px;
+}
+
+#date {
+  font-size: 30px;
+}
+
+#time {
+  font-size: 90px;
+}
+
+#temperature {
+  font-size: 140px;
+}
+
+.fancy-button{
+  border: 3px solid #fff;
+  background-color:transparent;
+  color:#fff;
+  text-align: center;
+  font-size: 30px;
+  font-family: 'Montserrat';
+  font-weight: normal;
+  padding: 10px 10px;
+  border-radius: 20px;
+
+}
+
+/* LOADER*/
+@keyframes lds-spinner {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@-webkit-keyframes lds-spinner {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.lds-spinner {
+  position: relative;
+}
+.lds-spinner div {
+  left: 94px;
+  top: 48px;
+  position: absolute;
+  -webkit-animation: lds-spinner linear 1s infinite;
+  animation: lds-spinner linear 1s infinite;
+  background: #002663;
+  width: 12px;
+  height: 24px;
+  border-radius: 40%;
+  -webkit-transform-origin: 6px 52px;
+  transform-origin: 6px 52px;
+}
+.lds-spinner div:nth-child(1) {
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-animation-delay: -0.916666666666667s;
+  animation-delay: -0.916666666666667s;
+}
+.lds-spinner div:nth-child(2) {
+  -webkit-transform: rotate(30deg);
+  transform: rotate(30deg);
+  -webkit-animation-delay: -0.833333333333333s;
+  animation-delay: -0.833333333333333s;
+}
+.lds-spinner div:nth-child(3) {
+  -webkit-transform: rotate(60deg);
+  transform: rotate(60deg);
+  -webkit-animation-delay: -0.75s;
+  animation-delay: -0.75s;
+}
+.lds-spinner div:nth-child(4) {
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+  -webkit-animation-delay: -0.666666666666667s;
+  animation-delay: -0.666666666666667s;
+}
+.lds-spinner div:nth-child(5) {
+  -webkit-transform: rotate(120deg);
+  transform: rotate(120deg);
+  -webkit-animation-delay: -0.583333333333333s;
+  animation-delay: -0.583333333333333s;
+}
+.lds-spinner div:nth-child(6) {
+  -webkit-transform: rotate(150deg);
+  transform: rotate(150deg);
+  -webkit-animation-delay: -0.5s;
+  animation-delay: -0.5s;
+}
+.lds-spinner div:nth-child(7) {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+  -webkit-animation-delay: -0.416666666666667s;
+  animation-delay: -0.416666666666667s;
+}
+.lds-spinner div:nth-child(8) {
+  -webkit-transform: rotate(210deg);
+  transform: rotate(210deg);
+  -webkit-animation-delay: -0.333333333333333s;
+  animation-delay: -0.333333333333333s;
+}
+.lds-spinner div:nth-child(9) {
+  -webkit-transform: rotate(240deg);
+  transform: rotate(240deg);
+  -webkit-animation-delay: -0.25s;
+  animation-delay: -0.25s;
+}
+.lds-spinner div:nth-child(10) {
+  -webkit-transform: rotate(270deg);
+  transform: rotate(270deg);
+  -webkit-animation-delay: -0.166666666666667s;
+  animation-delay: -0.166666666666667s;
+}
+.lds-spinner div:nth-child(11) {
+  -webkit-transform: rotate(300deg);
+  transform: rotate(300deg);
+  -webkit-animation-delay: -0.083333333333333s;
+  animation-delay: -0.083333333333333s;
+}
+.lds-spinner div:nth-child(12) {
+  -webkit-transform: rotate(330deg);
+  transform: rotate(330deg);
+  -webkit-animation-delay: 0s;
+  animation-delay: 0s;
+}
+.lds-spinner {
+  width: 200px !important;
+  height: 200px !important;
+  -webkit-transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
+  transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
+}
+/*MEDIA QUERIES*/
+
+
+/*tablets*/
+
+@media screen and ( max-width: 900px) {
+  #icon {
+    font-size: 180px;
+  }
+  #date {
+    font-size: 25px;
+  }
+  #time {
+    font-size: 70px;
+  }
+  #temperature {
+    font-size: 120px;
+  }
+}
+
+@media screen and ( max-width: 768px) {
+  #icon {
+    font-size: 130px;
+  }
+  #date {
+    font-size: 25px;
+  }
+  #time {
+    font-size: 55px;
+  }
+  #temperature {
+    font-size: 90px;
+  }
+}
+
+
+/*Mobiles*/
+
+@media screen and ( max-width: 480px) {
+  #city {
+    font-size: 30px;
+    text-align: center;
+  }
+  #icon {
+    font-size: 130px;
+  }
+  #date {
+    font-size: 20px;
+  }
+  #time {
+    font-size: 60px;
+  }
+  #temperature {
+    font-size: 100px;
+  }
+  #left-block {
+    margin: auto;
+    width: 100%;
+    padding: 5% 5% 0;
+    text-align: center;
+    font-size: 40px;
+  }
+  #right-block {
+    margin: auto;
+    width: 100%;
+    padding: 0 5% 0 5%;
+    text-align: center;
+    font-size: 40px;
+  }
+}
